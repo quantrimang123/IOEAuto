@@ -1,4 +1,4 @@
-
+⚠️ Truy cập https://ioeauto.giauy.dev/plus để sử dụng phiên bản mới nhất!
 ⚠️ Disclaimer
 This project is for educational purposes only. Using this tool to cheat in competitions like IOE is unethical and strictly prohibited. Misusing this tool may result in disqualification or account suspension. The developers are not responsible for any consequences resulting from misuse.
 
