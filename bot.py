@@ -27,7 +27,8 @@ def solve_question(q):
         return ""
 
 def main():
-    u, p = os.environ.get("IOE_USERNAME"), os.environ.get("IOE_PASSWORD")
+    u = os.environ.get("IOE_USERNAME")
+    p = os.environ.get("IOE_PASSWORD")
     
     opts = Options()
     opts.add_argument("--headless=new")
@@ -35,7 +36,7 @@ def main():
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--disable-gpu")
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options=opts)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=opts)
     
     try:
         driver.get("https://ioe.vn/dang-nhap")
