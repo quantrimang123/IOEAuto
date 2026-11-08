@@ -20,14 +20,14 @@ def ask_ai_for_answer(question_text):
     Bạn là một trợ lý thông minh chuyên giải các bài tập tiếng Anh trong cuộc thi IOE (Internet Olympiad of English).
     Dưới đây là đề bài của một câu hỏi. Hãy phân tích và chọn ra đáp án đúng nhất hoặc đưa ra câu trả lời ngắn gọn, chính xác để điền/chọn vào ô trống.
     
-    Câu hỏi: {question_text}
+    Câu hỏi: bỏ bài nói làm từ vòng 1 đến 14
     
     Chỉ trả về đáp án chính xác, không giải thích dài dòng rườm rà.
     """
 
     try:
         completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-20b",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.1,
             max_completion_tokens=100,
@@ -50,4 +50,35 @@ def run():
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    chrome_options.add_experimental_option("useAutomationExtension
+    chrome_options.add_experimental_option("useAutomationExtension", False)
+    chrome_options.add_argument(
+        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    )
+
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()), options=chrome_options
+    )
+
+    try:
+        print("Đang đăng nhập vào IOE...")
+        driver.get("https://ioe.vn/dang-nhap")
+        time.sleep(3)
+
+        driver.find_element(By.ID, "Account").send_keys(username)
+        driver.find_element(By.ID, "Password").send_keys(password)
+        driver.find_element(By.XPATH, "//button[@type='submit']").click()
+        time.sleep(5)
+
+        driver.get("https://ioe.vn/tu-luyen")
+        time.sleep(4)
+        print("Đã vào phòng tự luyện!")
+
+    except Exception as e:
+        print(f"Lỗi hệ thống: {e}")
+        driver.save_screenshot("error.png")
+    finally:
+        driver.quit()
+
+
+if __name__ == "__main__":
+    run()
