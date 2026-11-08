@@ -19,12 +19,7 @@ def ask_ai_for_answer(question_text):
     client = Groq(api_key=api_key)
 
     prompt = f"""
-    Bạn là một trợ lý thông minh chuyên giải các bài tập tiếng Anh trong cuộc thi IOE (Internet Olympiad of English).
-    Dưới đây là đề bài của một câu hỏi. Hãy phân tích và chọn ra đáp án đúng nhất hoặc đưa ra câu trả lời ngắn gọn, chính xác để điền/chọn vào ô trống.
-    
-    Câu hỏi: {question_text}
-    
-    Chỉ trả về đáp án chính xác, không giải thích dài dòng rườm rà.
+    Bạn là một máy farm thông minh chuyên giải các bài tập tiếng Anh trong cuộc thi IOE (Internet Olympiad of English).Làm hết từ vòng 1 đến 14 bỏ bài nói
     """
 
     try:
