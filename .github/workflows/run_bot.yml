@@ -1,4 +1,4 @@
-name: IOE Automation Bot
+name: IOE Automation Bot with AI
 
 on:
   # Cho phép kích hoạt thủ công trên giao diện GitHub (Tab Actions)
@@ -34,14 +34,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 5. Chạy file bot.py và truyền biến tài khoản bảo mật vào
-    - name: Run IOE Bot Script
-  env:
-    IOE_USERNAME: ${{ secrets.IOE_USERNAME }}
-    IOE_PASSWORD: ${{ secrets.IOE_PASSWORD }}
-    GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-  run: |
-    python bot.py
-
+    # 5. Chạy file bot.py và truyền toàn bộ biến bảo mật (Tài khoản IOE + Groq API Key)
+    - name: Run IOE AI Bot Script
+      env:
+        IOE_USERNAME: ${{ secrets.IOE_USERNAME }}
+        IOE_PASSWORD: ${{ secrets.IOE_PASSWORD }}
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
         python bot.py
