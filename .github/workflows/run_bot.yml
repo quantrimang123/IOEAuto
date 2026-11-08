@@ -17,4 +17,5 @@ jobs:
         IOE_USERNAME: ${{ secrets.IOE_USERNAME }}
         IOE_PASSWORD: ${{ secrets.IOE_PASSWORD }}
         PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: python bot.py
