@@ -36,8 +36,12 @@ jobs:
 
     # 5. Chạy file bot.py và truyền biến tài khoản bảo mật vào
     - name: Run IOE Bot Script
-      env:
-        IOE_USERNAME: ${{ secrets.IOE_USERNAME }}
-        IOE_PASSWORD: ${{ secrets.IOE_PASSWORD }}
+  env:
+    IOE_USERNAME: ${{ secrets.IOE_USERNAME }}
+    IOE_PASSWORD: ${{ secrets.IOE_PASSWORD }}
+    GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+  run: |
+    python bot.py
+
       run: |
         python bot.py
