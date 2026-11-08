@@ -5,6 +5,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -20,7 +22,7 @@ def ask_ai_for_answer(question_text):
     Bạn là một trợ lý thông minh chuyên giải các bài tập tiếng Anh trong cuộc thi IOE (Internet Olympiad of English).
     Dưới đây là đề bài của một câu hỏi. Hãy phân tích và chọn ra đáp án đúng nhất hoặc đưa ra câu trả lời ngắn gọn, chính xác để điền/chọn vào ô trống.
     
-    Câu hỏi: bỏ bài nói làm từ vòng 1 đến 14
+    Câu hỏi: {question_text}
     
     Chỉ trả về đáp án chính xác, không giải thích dài dòng rườm rà.
     """
@@ -60,13 +62,31 @@ def run():
     )
 
     try:
-        print("Đang đăng nhập vào IOE...")
+        print("Đang truy cập trang đăng nhập IOE...")
         driver.get("https://ioe.vn/dang-nhap")
-        time.sleep(3)
 
-        driver.find_element(By.ID, "Account").send_keys(username)
-        driver.find_element(By.ID, "Password").send_keys(password)
-        driver.find_element(By.XPATH, "//button[@type='submit']").click()
+        wait = WebDriverWait(driver, 20)
+
+        username_field = wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, "input[formcontrolname='account']")
+            )
+        )
+        password_field = wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, "input[formcontrolname='password']")
+            )
+        )
+        login_btn = wait.until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "button.btn-login, button[type='submit']")
+            )
+        )
+
+        username_field.send_keys(username)
+        password_field.send_keys(password)
+        login_btn.click()
+
         time.sleep(5)
 
         driver.get("https://ioe.vn/tu-luyen")
