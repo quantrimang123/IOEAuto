@@ -1,0 +1,43 @@
+name: IOE Automation Bot
+
+on:
+  # Cho phép kích hoạt thủ công trên giao diện GitHub (Tab Actions)
+  workflow_dispatch:
+  
+  # (Tùy chọn) Lập lịch tự động chạy định kỳ mỗi ngày vào 8 giờ sáng (UTC)
+  # schedule:
+  #   - cron: '0 8 * * *'
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout mã nguồn từ repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Cài đặt môi trường Python
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    # 3. Cài đặt Google Chrome trực tiếp trên Ubuntu runner
+    - name: Set up Chrome
+      uses: browser-actions/setup-chrome@latest
+
+    # 4. Cài đặt các thư viện phụ thuộc trong requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 5. Chạy file bot.py và truyền biến tài khoản bảo mật vào
+    - name: Run IOE Bot Script
+      env:
+        IOE_USERNAME: ${{ secrets.IOE_USERNAME }}
+        IOE_PASSWORD: ${{ secrets.IOE_PASSWORD }}
+      run: |
+        python bot.py
